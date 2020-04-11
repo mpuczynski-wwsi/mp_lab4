@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <vector>
 #include <iostream>
-
+#include <tuple>
+#include <fstream>
 
 using namespace std;
 
@@ -14,13 +15,15 @@ Napisz funkcję o nagłówku vector<int> uporzadkuj(const vector<int> & dane), k
 co dany,ale uporządkowany w ten sposób, by wszystkie liczby parzyste poprzedzały liczby nieparzyste.Nie używaj żadnych standardowych algorytmów 
 ani struktur danych oprócz vectora.
 
-Napisz program, który spyta użytkownika o nazwę pliku i przeprowadzi statystykę znaków niebiałyc występujących w tym pliku wyświetlając 
+Napisz program, który spyta użytkownika o nazwę pliku i przeprowadzi 
+statystykę znaków niebiałyc występujących w tym pliku wyświetlając 
 jednokrotnie kod każdego z występujących znaków wraz z jego liczebnością. Użyj vectora.
 */
 
 void menu();
 vector<double> suma(vector<double> t1, vector<double> t2);
 vector<int> uporzadkuj(const vector<int> & dane);
+vector<int> liczNiebialeZnaki(string plik);
 
 vector<double> t1 = {2.0, 5.0, 8.0, 16.0, 25.0};
 vector<double> t2 = {6.0, 7.0, 14.0, 22.0};
@@ -51,6 +54,7 @@ void menu(){
     cout <<  endl;
     cin >> wybor;
     int rok;
+    string nazwaPliku;
     switch (wybor)
     {
     case 1:
@@ -64,7 +68,12 @@ void menu(){
         cout << wyswietl(wynik2);
       break;
     case 3:
+      cout << "Podaj nazwe pliku: " << endl;
+      cout << "(Pusta nazwa spowoduje wyswietlenie domyslnego pliku przykladowego)" << endl;
+      cin.ignore();
+      getline(cin, nazwaPliku);
 
+      liczNiebialeZnaki(nazwaPliku);
       break;
     }
   } while (wybor != 0);
@@ -93,8 +102,29 @@ vector<int> uporzadkuj(const vector<int> & dane){
     }
   }
 
+
   for(int i = 0; i < nieparzyste.size(); i++){
     out.push_back(nieparzyste[i]);
+  }
+  return out;
+}
+
+vector<int> liczNiebialeZnaki(string plik){
+  vector<int> out;
+  string linia;
+  string sciezka;
+
+    cout  << "sss" << plik;
+  if (plik == ""){
+    sciezka = "input";
+  } else {
+    sciezka = plik;
+  }
+  ifstream fileHandler(sciezka);
+  while(getline(fileHandler, linia)){
+    for(string::iterator it = linia.begin(); it != linia.end(); ++it) {
+    cout << (int) *it << endl;
+  }
   }
   return out;
 }
