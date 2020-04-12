@@ -23,7 +23,7 @@ jednokrotnie kod każdego z występujących znaków wraz z jego liczebnością. 
 void menu();
 vector<double> suma(vector<double> t1, vector<double> t2);
 vector<int> uporzadkuj(const vector<int> & dane);
-vector<int> liczNiebialeZnaki(string plik);
+void liczNiebialeZnaki(string plik);
 
 vector<double> t1 = {2.0, 5.0, 8.0, 16.0, 25.0};
 vector<double> t2 = {6.0, 7.0, 14.0, 22.0};
@@ -109,12 +109,11 @@ vector<int> uporzadkuj(const vector<int> & dane){
   return out;
 }
 
-vector<int> liczNiebialeZnaki(string plik){
-  vector<int> out;
+void liczNiebialeZnaki(string plik){
+  vector<int> out(255);
   string linia;
   string sciezka;
 
-    cout  << "sss" << plik;
   if (plik == ""){
     sciezka = "input";
   } else {
@@ -123,10 +122,20 @@ vector<int> liczNiebialeZnaki(string plik){
   ifstream fileHandler(sciezka);
   while(getline(fileHandler, linia)){
     for(string::iterator it = linia.begin(); it != linia.end(); ++it) {
-    cout << (int) *it << endl;
+    
+    if ((int)*it > 0){
+      out[(int)*it] += 1;
+      
+    }
+
   }
   }
-  return out;
+  for (int i = 33; i < 127; i++){
+    if(out[i]){
+      cout << "Znak " << (char)i << " wysapil " <<  out[i] << " razy" << endl;
+    }
+
+  }
 }
 
 string wyswietl(vector<double> t){
